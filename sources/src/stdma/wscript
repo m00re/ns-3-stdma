@@ -1,0 +1,37 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    obj = bld.create_ns3_module('stdma', ['network', 'wifi'])
+    obj.source = [
+    	'helper/stdma-helper.cc',
+    	'helper/stdma-mac-helper.cc',
+    	'model/stdma-mac.cc',
+    	'model/stdma-net-device.cc',
+    	'model/stdma-slot-manager.cc',
+    	'model/stdma-header.cc',
+    	#'test/single-node-test.cc',
+    	#'test/two-nodes-test.cc',
+    	#'test/slot-manager-test.cc',
+    	#'test/stdma-test-suite.cc'
+        ]
+
+    #obj_test = bld.create_ns3_module_test_library('stdma')
+    #obj_test.source = [
+    #	'test/single-node-test.cc',
+    #	'test/two-nodes-test.cc',
+    #	'test/slot-manager-test.cc',
+    #	'test/stdma-test-suite.cc',
+    #    ]
+
+    headers = bld(features='ns3header')
+    headers.module = 'stdma'
+    headers.source = [
+    	'helper/stdma-helper.h',
+    	'helper/stdma-mac-helper.h',
+    	'model/stdma-mac.h',
+    	'model/stdma-net-device.h',
+    	'model/stdma-slot-manager.h',
+    	'model/stdma-header.h',
+        #'test/stdma-test-suite.h'
+        ]
+
