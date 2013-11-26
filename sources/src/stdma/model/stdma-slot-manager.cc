@@ -1076,17 +1076,39 @@ namespace stdma {
           }
       }
 
+    // If up to now no free slot is available we will reuse an allocated slot
+    if (candidates.size() < 1)
+      {
+    	NS_LOG_DEBUG(ns3::Simulator::Now() << " " << ns3::Simulator::GetContext() << "StdmaSlotManager:GetNetworkEntryTimestamp() has to add one already allocated slot");
+    	std::map<double, uint32_t> usedSlots;
+    	for (uint32_t i = start; i < end; i++)
+    	  {
+    		if (m_slots[i]->IsAllocated())
+    		  {
+    			ns3::Vector owner = m_slots[i]->GetPosition();
+    			ns3::Vector myself = ns3::NodeList::GetNode(ns3::Simulator::GetContext())->GetObject<ns3::MobilityModel>()->GetPosition();
+    			double distance = ns3::CalculateDistance(owner, myself);
+    			while (usedSlots.find(distance) != usedSlots.end())
+    			  {
+    				distance += 0.000001;
+    			  }
+    			usedSlots[distance] = m_slots[i]->GetSlotIndex();
+    		  }
+    	  }
+    	std::map<double, uint32_t>::reverse_iterator it = usedSlots.rbegin();
+    	uint32_t index = it->second;
+    	candidates.push_back(index);
+      }
+
     // Calculate the probability value that has to be met in order to transmit in the next slot
     uint32_t n = candidates.size();
     uint32_t no = 0;
     double prob = p; // 1.0 / n;
-    double c = 0; // constant for logarithmic increase
-    double log_sum = 0; // sum over all logarithmic increases
     double incr = 0;
 
 	if (p <= 1.0)
 	  {
-		incr = (1.0-p)/n;
+		incr = (1.0-p) / n;
 	  }
 	prob += incr;
 
