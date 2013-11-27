@@ -103,3 +103,12 @@ stdmaHelper.Install(wifiPhy, stdmaMac, m_nodes, startupTimes);
 ```
 
 and you are ready to go. 
+
+3) Complete example scenario
+--------------------------------------
+
+The module ships with a simple but fully functional example scenario that is built
+as long as NS-3 is built with examples enabled. The source code to this example is
+located in src/stdma/examples/simple-stdma-example.cc and consists of a scenario
+in which 10 nodes startup simultaneously and then transmit 10 packets/sec over a 
+time duration of 20 seconds.
