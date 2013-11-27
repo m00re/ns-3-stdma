@@ -97,14 +97,14 @@ namespace stdma {
     ns3::ApplicationContainer app;
     app = onOff.Install (m_nodes);
     app.Start(ns3::Seconds (0.0));
-    app.Stop(ns3::Seconds (4.0));
+    app.Stop(ns3::Seconds (4.05));
 
     ns3::Config::Connect("/NodeList/*/DeviceList/*/$stdma::StdmaNetDevice/Mac/Startup", ns3::MakeCallback (&stdma::StdmaTwoNodesTest::StdmaStartupTrace, this) );
     ns3::Config::Connect("/NodeList/*/DeviceList/*/$stdma::StdmaNetDevice/Mac/Tx", ns3::MakeCallback (&stdma::StdmaTwoNodesTest::StdmaTxTrace, this) );
     ns3::Config::Connect("/NodeList/*/DeviceList/*/$stdma::StdmaNetDevice/Mac/Rx", ns3::MakeCallback (&stdma::StdmaTwoNodesTest::StdmaRxTrace, this) );
     ns3::Config::Connect("/NodeList/*/DeviceList/*/$stdma::StdmaNetDevice/Mac/NetworkEntry", ns3::MakeCallback (&stdma::StdmaTwoNodesTest::StdmaNetworkEntry, this) );
 
-    ns3::Simulator::Stop(ns3::Seconds(4.0));
+    ns3::Simulator::Stop(ns3::Seconds(4.05));
 
     m_count = 0;
     ns3::Simulator::Run ();
@@ -158,7 +158,7 @@ namespace stdma {
   }
 
   void
-  StdmaTwoNodesTest::StdmaNetworkEntry(std::string context, ns3::Ptr<const ns3::Packet> p, ns3::Time offset)
+  StdmaTwoNodesTest::StdmaNetworkEntry(std::string context, ns3::Ptr<const ns3::Packet> p, ns3::Time offset, bool isTaken)
   {
     switch (ns3::Simulator::GetContext())
     {

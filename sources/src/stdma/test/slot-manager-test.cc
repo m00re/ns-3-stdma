@@ -27,6 +27,7 @@
 #include "ns3/packet-socket-address.h"
 #include "ns3/on-off-helper.h"
 #include "ns3/llc-snap-header.h"
+#include "ns3/mac48-address.h"
 #include "slot-manager-test.h"
 
 using namespace ns3;
@@ -59,7 +60,8 @@ namespace stdma {
       }
     manager->MarkSlotAsBusy(20);
     NS_TEST_EXPECT_MSG_EQ (StdmaSlot::BUSY, manager->GetSlot(20)->GetState(), "The slot should be busy as we have marked it busy in the last instruction.");
-    manager->MarkSlotAsAllocated(30, 8, ns3::Vector(1.0, 0.0, 0.0));
+    ns3::Mac48Address owner("ab:cd:ef:12:34:56");
+    manager->MarkSlotAsAllocated(30, 8, owner, ns3::Vector(1.0, 0.0, 0.0), ns3::Seconds(0.0));
     NS_TEST_EXPECT_MSG_EQ (StdmaSlot::ALLOCATED, manager->GetSlot(30)->GetState(), "The slot should be allocated as we have marked it busy in the last instruction.");
     NS_TEST_EXPECT_MSG_EQ (8, manager->GetSlot(30)->GetTimeout(), "The slot should have a timeout of 8 as we have marked it busy in the last instruction.");
 

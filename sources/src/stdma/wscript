@@ -9,19 +9,15 @@ def build(bld):
     	'model/stdma-net-device.cc',
     	'model/stdma-slot-manager.cc',
     	'model/stdma-header.cc',
-    	#'test/single-node-test.cc',
-    	#'test/two-nodes-test.cc',
-    	#'test/slot-manager-test.cc',
-    	#'test/stdma-test-suite.cc'
         ]
 
-    #obj_test = bld.create_ns3_module_test_library('stdma')
-    #obj_test.source = [
-    #	'test/single-node-test.cc',
-    #	'test/two-nodes-test.cc',
-    #	'test/slot-manager-test.cc',
-    #	'test/stdma-test-suite.cc',
-    #    ]
+    obj_test = bld.create_ns3_module_test_library('stdma')
+    obj_test.source = [
+    	'test/single-node-test.cc',
+    	'test/two-nodes-test.cc',
+    	'test/slot-manager-test.cc',
+    	'test/stdma-test-suite.cc',
+        ]
 
     headers = bld(features='ns3header')
     headers.module = 'stdma'
@@ -32,6 +28,7 @@ def build(bld):
     	'model/stdma-net-device.h',
     	'model/stdma-slot-manager.h',
     	'model/stdma-header.h',
-        #'test/stdma-test-suite.h'
         ]
 
+    bld.ns3_python_bindings()
+    

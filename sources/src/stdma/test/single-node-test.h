@@ -38,7 +38,7 @@ public:
   virtual void DoRun (void);
   void StdmaTxTrace (std::string context, ns3::Ptr<const ns3::Packet> p, uint32_t no, uint8_t timeout, uint32_t offset);
   void StdmaStartupTrace (std::string context, ns3::Time when, ns3::Time frameDuration, ns3::Time slotDuration);
-  void StdmaNetworkEntry (std::string context, ns3::Ptr<const ns3::Packet> p, ns3::Time offset);
+  void StdmaNetworkEntry (std::string context, ns3::Ptr<const ns3::Packet> p, ns3::Time offset, bool isTaken);
 
 private:
   uint32_t GetProtocolOverheads();

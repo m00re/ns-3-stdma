@@ -29,11 +29,11 @@ using namespace ns3;
 namespace stdma {
 
   StdmaSingleNodeTestSuite::StdmaSingleNodeTestSuite ()
-    : ns3::TestSuite ("devices-stdma", UNIT)
+    : ns3::TestSuite ("stdma", UNIT)
   {
-    AddTestCase (new StdmaTwoNodesTest);
-    AddTestCase (new StdmaSingleNodeTest);
-    AddTestCase (new StdmaSlotManagerTest);
+    AddTestCase (new StdmaTwoNodesTest, TestCase::QUICK);
+    AddTestCase (new StdmaSingleNodeTest, TestCase::QUICK);
+    AddTestCase (new StdmaSlotManagerTest, TestCase::QUICK);
   }
 
   StdmaSingleNodeTestSuite g_stdmaSingleNodeTestSuite;
