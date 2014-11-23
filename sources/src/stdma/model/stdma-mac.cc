@@ -167,7 +167,13 @@ namespace stdma
                       ns3::MakeTraceSourceAccessor (&StdmaMac::m_txTrace))
         .AddTraceSource("Rx",
                       "This event is triggered whenever the station receives a packet",
-                      ns3::MakeTraceSourceAccessor (&StdmaMac::m_rxTrace));
+                      ns3::MakeTraceSourceAccessor (&StdmaMac::m_rxTrace))
+        .AddTraceSource("Enqueue",
+                      "This event is triggered whenever a packet is successfully queued",
+                      ns3::MakeTraceSourceAccessor (&StdmaMac::m_enqueueTrace))
+        .AddTraceSource("EnqueueFail",
+                      "This event is triggered whenever a packet attempts to be queued but fails",
+                      ns3::MakeTraceSourceAccessor (&StdmaMac::m_enqueueFailTrace));
     return tid;
   }
 
@@ -229,6 +235,7 @@ namespace stdma
   StdmaMac::Enqueue(ns3::Ptr<const ns3::Packet> packet, ns3::Mac48Address to, ns3::Mac48Address from)
   {
     NS_FATAL_ERROR("This MAC entity (" << this << ", " << GetAddress () << ") does not support Enqueue() with from address");
+    m_enqueueFailTrace(packet);
   }
 
   void
@@ -250,11 +257,13 @@ namespace stdma
         NS_LOG_DEBUG(ns3::Simulator::Now() << " " << ns3::Simulator::GetContext() << " StdmaMac:Enqueue() packet with no. " << packet->GetUid() << " has been enqueued at node "
             << ns3::Simulator::GetContext() << " (size = " << numBytes << " bytes)");
         m_queue->Enqueue(packet, hdr);
+        m_enqueueTrace(packet);
       }
     else
       {
         NS_LOG_DEBUG(ns3::Simulator::Now() << " " << ns3::Simulator::GetContext() << " StdmaMac:Enqueue() packet with no. " << packet->GetUid() << " has been dropped ("
             << numBytes << " > MAX_PACKET_SIZE = " << m_maxPacketSize);
+        m_enqueueFailTrace(packet);
       }
   }
 
