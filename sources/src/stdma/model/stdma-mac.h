@@ -335,6 +335,8 @@ namespace stdma {
     ns3::TracedCallback<ns3::Ptr<const ns3::Packet>, ns3::Time, bool> m_networkEntryTrace;
     ns3::TracedCallback<ns3::Ptr<const ns3::Packet>, uint32_t, uint8_t, uint32_t> m_txTrace;
     ns3::TracedCallback<ns3::Ptr<const ns3::Packet>, uint8_t, uint32_t> m_rxTrace;
+    ns3::TracedCallback<ns3::Ptr<const ns3::Packet>> m_enqueueTrace;
+    ns3::TracedCallback<ns3::Ptr<const ns3::Packet>> m_enqueueFailTrace;
 
   };
 
